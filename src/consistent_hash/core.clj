@@ -25,13 +25,16 @@
   )
 
 (defn -main [& args]
-  (let [number-of-nodes 10
-        times 1000000
-        hash-values  (repeatedly times (fn [] (consistent-hash (long (rand m)) number-of-nodes)))
-        loads (sort (reduce (fn [ret node] (update ret node inc)) (zipmap (range 1 (inc number-of-nodes)) (repeat 0)) hash-values))
-        ]
-    (println "Server load: " loads)
-    (println "Standard deviation: " (standard-deviation (map second loads)))
+  (dotimes [n 10]
+    (let [number-of-nodes 10
+          times 1000000
+          hash-values  (repeatedly times (fn [] (consistent-hash (long (rand m)) number-of-nodes)))
+          loads (sort (reduce (fn [ret node] (update ret node inc)) (zipmap (range 1 (inc number-of-nodes)) (repeat 0)) hash-values))
+          ]
+      (println "Test" (inc n))
+      ; (println "Server load: " loads)
+      (println "Standard deviation: " (standard-deviation (map second loads)))
+      )
     )
   )
 
